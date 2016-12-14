@@ -1,23 +1,27 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-int main(void) {
-    int i, j;
-    int count = 0;
-    char s[1000000];
+char* receiveInput( char *s ){
+    scanf("%1000000s",s);
+    return s;
+}
 
-    gets(s);
-
-    for (i = 0; i <= strlen(s) - 1; i++) {
-        for (j = i; j <= strlen(s) - 1; j++) {
-            if (s[j] >= '0' && s[j] <= '9') {
-                ++count;
-            } else {
-                break;
-            }
+int main() {
+    char st[1000000];
+    receiveInput(st);
+    long long i, j = 0;
+    long long sum = 0;
+    st[strlen(st)] = ' ';
+    st[strlen(st) + 1] = '\0';
+    for (i = 0; i <= strlen(st); i++) {
+        if (st[i] > 47 && st[i] < 58)
+            j++;
+        else if (j > 0) {
+            sum += (( j * (j + 1)) / 2);
+            j = 0;
         }
     }
-
-    printf("%d", count);
+    printf("%lld", sum);
     return 0;
 }

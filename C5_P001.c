@@ -16,32 +16,61 @@ int areaOfRectangle(int l, int w)
 
 int getNextInt() {
     /* your code goes here */
-    gets(value);
-    if ((int)value - value)
-        return -1;
-    else
+    int length;
+    char s[10000];
+    int value = 0;
+    gets(s);
+    for (length = 0; s[length] != '\0'; ++length);
+    if (s[0] == '-') {
+        for (int i = 1; i <= length - 1; i++)
+            if (s[i] <= 47 || s[i] >= 58)
+                return -1;
+        return 0;
+    } else {
+        for (int i = 0; i <= length - 1; i++) {
+            if (s[i] <= 47 || s[i] >= 58)
+                return -1;
+            value = value * 10 + (s[i] - '0');
+        };
+        if (value - 0 == 0)
+            return 0;
+        else return value;
+    }
+    return -1;
 }
+
 
 int getNextChoice() {
     /* your code goes here */
-    char numberArray[10] = "0123456789";
-    int check, value;
-    gets(string);
-    for (int i = 0; i <= strlen(string) - 1; i++)
-        if (strstr(numberArray, string[i]) == NULL) {
-            check = -1;
-            break;
+    char s[10000];
+    int length;
+    gets(s);
+    for (length = 0; s[length] != '\0'; ++length);
+    if (length == 1) {
+        if (s[0] >= 58 && s[0] <= 47)
+            return -1;
+        if (s[0] <= 51 && s[0] >= 49)
+            return (s[0] - '0');
+        if (s[0] == 48 || (s[0] >= 52 && s[0] <= 57))
+            return 0;
+    } else if (length > 1){
+        if (s[0] == '-') {
+            for (int i = 1; i <= length - 1; i++) {
+                //  printf("%d", s[i]);
+                if (s[i] >= 58 || s[i] <= 47)
+                    return -1;
+            };
+            return 0;
+        } else {
+            for (int i = 0; i <= length - 1; i++) {
+                //  printf("%d", s[i]);
+                if (s[i] >= 58 || s[i] <= 47)
+                    return -1;
+            };
+            return 0;
         }
-    if (check != 1) {
-        sscanf(string, "%d", &value);
-        switch (value) {
-            case (1): return 1;
-            case (2): return 2;
-            case (3): return 3;
-        }
-    } else
-        return -1;
-    return 0;
+    };
+    return -1;
 }
 
 float readIntUntilTrue() {

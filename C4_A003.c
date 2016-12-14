@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 
-int gcd(int a, int b) {
-    int temp;
+long long gcd(long long a, long long b) {
+    long long temp;
     while (b != 0) {
         temp = a % b;
         a = b;
@@ -12,17 +12,18 @@ int gcd(int a, int b) {
 }
 
 int main(void) {
-    int n;
-    int a[100000], b[100000];
-    int lcm, hcf;
-    scanf("%d", &n);
-    for (int i = 0; i <= n - 1; i++) {
-        scanf("%d %d", &a[i], &b[i]);
+    long long n;
+    long long a[100000], b[100000];
+    long long hcf;
+    long long lcm;
+    scanf("%lld", &n);
+    for (long long i = 0; i <= n - 1; i++) {
+        scanf("%lld %lld", &a[i], &b[i]);
     }
-    for (int i = 0; i <= n - 1; i++) {
+    for (long long i = 0; i <= n - 1; i++) {
         hcf = gcd(a[i], b[i]);
         lcm = (a[i] * b[i]) / hcf;
-        printf("%d %d\n", hcf, lcm);
+        printf("%lld %lld\n", hcf, lcm);
     }
     return 0;
 }

@@ -1,104 +1,48 @@
 #include <stdio.h>
+#include <string.h>
 
-int convertedNumber[64], index = 0;
+char s[10];
 
-char baseDigits[16] =
-{'0', '1', '2', '3', '4', '5', '6', '7',
-'8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-
-//  Converter from Dec to Others
-
-void convertDecToBin(numberToConvert, int index) {
-    while (numberToConvert != 0) {
-        convertedNumber[index] = numberToConvert % 2;
-        numberToConvert = numberToConvert / 2;
-        ++index;
+long long decc(int base){
+    unsigned int dec = 0;
+    for(int i = (strlen(s) - 1), j = 1; i > -1; i--, j = j * base){
+        if(s[i] > 47 && s[i] < 58)
+            dec = (s[i] - 48) * j + dec;
+        // else if (s[i] > 64 && s[i] < 71)
+        //     dec = (s[i] - 55) * j + dec;
+        else if (s[i] > 96 && s[i] < 103)
+            dec = (s[i] - 87) * j + dec;
     }
-
+    return dec;
 }
 
-void convertDecToOct(numberToConvert, int index) {
-    while (numberToConvert != 0) {
-        convertedNumber[index] = numberToConvert % 8;
-        numberToConvert = numberToConvert / 8;
-        ++index;
-    }
+void output(long long gt, int y){
+    char base16[16] ="0123456789abcdef";
+    int number[100], index=0;
 
+    if(gt == 0){
+        printf("0");
+        return;
+    }
+    while (gt != 0){
+        number[index] = gt % y;
+	gt = gt / y;
+	++index;
+    }
+    --index;
+    for(  ; index > -1; index--)
+	printf("%c", base16[number[index]]);
 }
 
-void convertDecToHex(numberToConvert, int index) {
-    while (numberToConvert != 0) {
-        convertedNumber[index] = numberToConvert % 16;
-        numberToConvert = numberToConvert / 16;
-        ++index;
-    }
+int main(){
+    int x, y, base;
+    long long gt, arr[] = {0,2,8,10,16};
 
-}
-
-//  Converter from Others to Dec
-
-int decOfBin(numberToConvert, int index) {
-    int j = 0, tmp, sumOfBin, multipVariable;
-    while (numberToConvert != 0) {
-        tmp = numberToConvert % 10;
-        for (int k = 0; k <= j; k++)
-            multipVariable *= multipVariable;
-        sumOfBin += tmp * multipVariable;
-        j++;
-    };
-    return sumOfBin;
-}
-
-//  Main Process
-
-int main(void)
-{
-    int x, y, numberToConvert;
-
-    scanf("%d %d", &x, &y);
-
-    //  Converter from Dec to Others
-
-    if (x == 3) {
-        scanf("%d", numberToConvert);
-
-        switch(y) {
-            case (1):
-                    convertDecToBin(numberToConvert, int index);
-            case (2):
-                    convertDecToOct(numberToConvert, int index);
-            case (4):
-                    convertDecToHex(numberToConvert, int index);
-        };
-
-        --index;
-
-        for(  ; index>=0; index--) {
-            printf("%c", baseDigits[convertedNumber[index]]);
-        }
-    }
-
-    //  Converter from Bin to Others
-    if (x == 1) {
-        scanf("%d", numberToConvert);
-
-        switch(y) {
-            case (2):
-                  convertDecToOct(decOfBin(numberToConvert, int index));
-                  --index;
-
-                  for ( ; index >= 0; index--) {
-                      printf("%c", baseDigits[convertedNumber[index]]);
-                  }
-            case (3):
-                  printf("%d", decOfBin(numberToConvert, int index));
-        };
-
-    }
-
-}
-
-int main(void) {
-    scanf("%d", &index);
-    printf("%d", index);
+    scanf("%d%d\n", &x, &y);
+    gets(s);
+    base = arr[x];
+    gt = decc(base);
+    base = arr[y];
+    output(gt, base);
+    return 0;
 }
